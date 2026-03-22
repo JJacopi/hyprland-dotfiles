@@ -1,4 +1,10 @@
 configuration {
-    theme: "rounded-nord-dark";
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+    show-icons: true;
+    font: "JetBrainsMono Nerd Font 12";
+    icon-theme: "Papirus";
 }
-@theme "~/dotfiles/rofi/themes/rounded-nord-dark.rasi"
+
+@theme "~/.config/rofi/themes/rounded-nord-dark.rasi"
