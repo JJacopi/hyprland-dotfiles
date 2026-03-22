@@ -1,0 +1,4 @@
+configuration {
+    theme: "rounded-nord-dark";
+}
+@theme "~/dotfiles/rofi/themes/rounded-nord-dark.rasi"
