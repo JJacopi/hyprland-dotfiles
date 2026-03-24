@@ -1,403 +1,273 @@
-/* =============================================================================
- *
- * Waybar configuration - Modern Style (Simplified)
- *
- * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
- *
- * =========================================================================== */
+/* ── Waybar — Minimal Hyprland Theme ─────────────────────────────────────── */
 
-@import 'themes/kanagawa.css';
+@define-color base   #1e1e2e;
+@define-color mantle #181825;
+@define-color crust  #11111b;
 
-/* -----------------------------------------------------------------------------
- * Base styles
- * -------------------------------------------------------------------------- */
+@define-color text     #cdd6f4;
+@define-color subtext  #a6adc8;
+@define-color overlay  #6c7086;
+
+@define-color blue    #89b4fa;
+@define-color lavender #b4befe;
+@define-color mauve   #cba6f7;
+@define-color red     #f38ba8;
+@define-color peach   #fab387;
+@define-color yellow  #f9e2af;
+@define-color green   #a6e3a1;
+@define-color teal    #94e2d5;
+@define-color sky     #89dceb;
 
 * {
     border: none;
     border-radius: 0;
-    font-family: 'JetBrains Mono', 'Hack Nerd Font', 'UbuntuMono', monospace;
-    font-size: 14px;
-    font-weight: 600;
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
+    font-size: 13px;
+    font-weight: 500;
     min-height: 0;
-    padding: 0;
-    margin: 0;
+    transition: all 150ms ease;
 }
 
+/* ── Bar Window ─────────────────────────────────────────────────────────── */
 window#waybar {
-    background: rgba(15, 15, 20, 0.3);
-    border-bottom: 1px solid rgba(149, 127, 184, 0.3);
-}
-
-/* -----------------------------------------------------------------------------
- * Tooltips
- * -------------------------------------------------------------------------- */
-
-tooltip {
-    background: @background-primary;
+    background: alpha(@crust, 0.85);
+    border: 1px solid alpha(@overlay, 0.2);
+    border-radius: 12px;
     color: @text;
-    opacity: 1.0;
-    border: 1px solid @border-color;
-    border-radius: 8px;
-    padding: 8px 12px;
 }
 
-tooltip label {
-    color: @text;
-    font-size: 12px;
+/* ── Shared Module Base ─────────────────────────────────────────────────── */
+.modules-left,
+.modules-center,
+.modules-right {
+    padding: 0 4px;
 }
 
-/* -----------------------------------------------------------------------------
- * Workspaces
- * -------------------------------------------------------------------------- */
+#workspaces,
+#window,
+#clock,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#battery,
+#tray,
+#custom-media-prev,
+#custom-media-play,
+#custom-media-next,
+#custom-media-info,
+#custom-cava {
+padding: 4px 12px;
+margin: 4px 2px;
+border-radius: 8px;
+color: @subtext;
+background: transparent;
+}
 
+/* ── Workspaces ─────────────────────────────────────────────────────────── */
 #workspaces {
-background: @background-primary;
-padding: 4px;
-margin: 6px 2px;
-border-radius: 12px;
-border: 2px solid @border-color;
+padding: 4px 6px;
 }
 
 #workspaces button {
-padding: 6px 10px;
-margin: 0 2px;
-background: @background-primary;
-color: @subtext0;
-border-radius: 8px;
-font-weight: bold;
-border: 1px solid @border-color;
+padding: 2px 6px;
+margin: 0 1px;
+border-radius: 6px;
+color: @overlay;
+background: transparent;
+min-width: 0;
 }
 
 #workspaces button:hover {
-background: @background-hover;
-color: @lavender;
-border-color: @mauve;
+background: alpha(@blue, 0.12);
+color: @blue;
+box-shadow: none;
 }
 
-#workspaces button.active,
-#workspaces button.focused {
-background: @mauve;
-color: @base;
-font-weight: bold;
-opacity: 1;
-border-color: @pink;
-}
-
-#workspaces button.empty {
-opacity: 0.3;
-background: @background-secondary;
+#workspaces button.active {
+color: @blue;
+background: alpha(@blue, 0.18);
 }
 
 #workspaces button.urgent {
-background: @error;
-color: @base;
-border-color: @maroon;
+color: @red;
+background: alpha(@red, 0.15);
+animation: blink 0.8s ease infinite alternate;
 }
 
-/* -----------------------------------------------------------------------------
- * Window title
- * -------------------------------------------------------------------------- */
+@keyframes blink {
+    from { opacity: 1; }
+    to   { opacity: 0.4; }
+}
 
+/* ── Window Title ───────────────────────────────────────────────────────── */
 #window {
-background: @background-secondary;
-color: @text;
-padding: 8px 16px;
-border-radius: 12px;
-border: 1px solid @border-color;
-font-weight: 500;
+color: alpha(@text, 0.55);
+font-size: 12px;
+font-weight: 400;
 }
 
-/* -----------------------------------------------------------------------------
- * Clock
- * -------------------------------------------------------------------------- */
+/* ── Media Controls ─────────────────────────────────────────────────────── */
+#custom-media-prev,
+#custom-media-next {
+color: @overlay;
+padding: 4px 6px;
+font-size: 14px;
+}
 
-#clock {
-background: @blue;
-color: @base;
-font-weight: bold;
-margin: 6px 2px 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
+#custom-media-prev:hover,
+#custom-media-next:hover {
+color: @pink;
+background: alpha(@pink, 0.10);
+}
+
+#custom-media-play {
+color: @pink;
 font-size: 15px;
+padding: 4px 8px;
+background: alpha(@pink, 0.10);
+border-radius: 8px;
 }
 
-/* -----------------------------------------------------------------------------
- * System monitoring modules
- * -------------------------------------------------------------------------- */
-
-#memory {
-background: @background-primary;
-color: @green;
-border-left: 4px solid @green;
-border-radius: 12px 0 0 12px;
-margin: 6px 0;
-padding: 8px 12px;
+#custom-media-play:hover {
+background: alpha(@pink, 0.20);
+color: @text;
 }
 
-#cpu {
-background: @background-primary;
-color: @blue;
-border-left: 4px solid @blue;
-margin: 6px 0px 6px 0;
-padding: 8px 12px;
+/* ── Media Info (scrolling title) ───────────────────────────────────────── */
+#custom-media-info {
+color: alpha(@text, 0.70);
+font-size: 12px;
+font-weight: 400;
+font-style: italic;
+
+
+padding: 4px 10px;
+border-left: 1px solid alpha(@overlay, 0.25);
+border-right: 1px solid alpha(@overlay, 0.25);
 }
 
-#temperature {
-background: @background-primary;
-color: @teal;
-border-left: 4px solid @teal;
-border-radius: 0 12px 12px 0;
-margin: 6px 2px 6px 0;
-padding: 8px 12px;
+#custom-media-info:hover {
+color: @pink;
 }
 
-#temperature.critical {
-background: @error;
-color: @base;
-border-left: 4px solid @maroon;
+/* When nothing is playing, the whole center group gracefully disappears */
+#custom-media-info.empty,
+#custom-media-prev.empty,
+#custom-media-play.empty,
+#custom-media-next.empty {
+opacity: 0;
+min-width: 0;
+padding: 0;
+margin: 0;
 }
 
-/* -----------------------------------------------------------------------------
- * Battery
- * -------------------------------------------------------------------------- */
-
-#battery {
-background: @background-primary;
-color: @green;
-border-left: 4px solid @green;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
+/* ── Cava Visualizer ────────────────────────────────────────────────────── */
+#custom-cava {
+font-family: "JetBrainsMono Nerd Font", monospace;
+font-size: 11px;
+color: @mauve;
+letter-spacing: 1px;
+padding: 4px 8px;
+min-width: 80px;
 }
 
-#battery.charging {
-color: @yellow;
-border-left: 4px solid @yellow;
+
+/* ── Clock ──────────────────────────────────────────────────────────────── */
+#clock {
+color: @text;
+font-weight: 600;
+letter-spacing: 0.04em;
 }
 
-#battery.warning {
-background: @warning;
-color: @base;
-border-left: 4px solid @peach;
+#clock:hover {
+background: alpha(@lavender, 0.12);
+color: @lavender;
 }
 
-#battery.critical:not(.charging) {
-background: @error;
-color: @base;
-border-left: 4px solid @maroon;
-}
-
-/* -----------------------------------------------------------------------------
- * Audio and Backlight
- * -------------------------------------------------------------------------- */
-
-#backlight {
-background: @background-primary;
-color: @yellow;
-border-left: 4px solid @yellow;
-border-radius: 12px 0 0 12px;
-margin: 6px 0 6px 2px;
-padding: 8px 12px;
-}
-
+/* ── Audio ──────────────────────────────────────────────────────────────── */
 #pulseaudio {
-background: @background-primary;
-color: @yellow;
-border-left: 4px solid @yellow;
-border-radius: 0 12px 12px 0;
-margin: 6px 2px 6px 0;
-padding: 8px 12px;
+color: @subtext;
+}
+
+#pulseaudio:hover {
+background: alpha(@teal, 0.12);
+color: @teal;
 }
 
 #pulseaudio.muted {
-color: @subtext0;
-border-left: 4px solid @subtext0;
+color: alpha(@overlay, 0.7);
 }
 
-/* -----------------------------------------------------------------------------
- * Network
- * -------------------------------------------------------------------------- */
-
+/* ── Network ────────────────────────────────────────────────────────────── */
 #network {
-background: @background-primary;
-color: @green;
-border-left: 4px solid @green;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
+color: @subtext;
+}
+
+#network:hover {
+background: alpha(@sky, 0.12);
+color: @sky;
 }
 
 #network.disconnected {
-color: @error;
-border-left: 4px solid @error;
+color: @red;
 }
 
-#network.disabled {
-color: @subtext0;
-border-left: 4px solid @subtext0;
+/* ── CPU ────────────────────────────────────────────────────────────────── */
+#cpu {
+color: @subtext;
 }
 
-/* -----------------------------------------------------------------------------
- * Language
- * -------------------------------------------------------------------------- */
+#cpu:hover {
+background: alpha(@peach, 0.12);
+color: @peach;
+}
 
-#language {
-background: @background-primary;
+/* ── Memory ─────────────────────────────────────────────────────────────── */
+#memory {
+color: @subtext;
+}
+
+#memory:hover {
+background: alpha(@mauve, 0.12);
 color: @mauve;
-border-left: 4px solid @mauve;
-margin: 6px 0 6px 2px;
-padding: 8px 12px;
-border-radius: 12px 0 0 12px;
 }
 
-#keyboard-state {
-background: @background-primary;
-color: @mauve;
-border-left: 4px solid @mauve;
-margin: 6px 2px 6px 0;
-padding: 8px 12px;
-border-radius: 0 12px 12px 0;
+/* ── Battery ─────────────────────────────────────────────────────────────── */
+#battery {
+color: @subtext;
 }
 
-/* -----------------------------------------------------------------------------
- * Custom modules
- * -------------------------------------------------------------------------- */
-
-#custom-launcher {
-background: @mauve;
-color: @base;
-font-size: 16px;
-font-weight: bold;
-margin: 6px 2px 6px 8px;
-padding: 8px 14px 8px 10px;
-border-radius: 12px;
-border: 2px solid @pink;
-}
-
-#custom-weather {
-background: @background-primary;
-color: @blue;
-border-left: 4px solid @blue;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
-}
-
-#custom-updates {
-background: @background-primary;
-color: @yellow;
-border-left: 4px solid @yellow;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
-}
-
-#custom-updates.has-updates {
-background: @warning;
-color: @base;
-border-left: 4px solid @peach;
-}
-
-#custom-vpn {
-background: @background-primary;
-color: @teal;
-border-left: 4px solid @teal;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
-}
-
-#custom-vpn.connected {
-color: @success;
-border-left: 4px solid @success;
-}
-
-#custom-notification {
-background: @background-primary;
-color: @lavender;
-border-left: 4px solid @lavender;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
-}
-
-#custom-cava {
-background: @background-primary;
+#battery:hover {
+background: alpha(@green, 0.12);
 color: @green;
-border-left: 4px solid @green;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
 }
 
-/* -----------------------------------------------------------------------------
- * Tray
- * -------------------------------------------------------------------------- */
+#battery.charging,
+#battery.plugged {
+color: @green;
+}
 
+#battery.warning:not(.charging) {
+color: @yellow;
+}
+
+#battery.critical:not(.charging) {
+color: @red;
+animation: blink 0.6s ease infinite alternate;
+}
+
+/* ── Tray ────────────────────────────────────────────────────────────────── */
 #tray {
-background: @background-secondary;
-padding: 6px 10px;
-margin: 6px 8px 6px 2px;
-border-radius: 12px;
-border: 1px solid @border-color;
+padding: 4px 8px;
 }
 
 #tray > .passive {
-opacity: 0.7;
+-gtk-icon-effect: dim;
 }
 
 #tray > .needs-attention {
-background-color: @error;
+-gtk-icon-effect: highlight;
+background: alpha(@red, 0.15);
 border-radius: 6px;
-color: @base;
-}
-
-/* -----------------------------------------------------------------------------
- * Idle inhibitor
- * -------------------------------------------------------------------------- */
-
-#idle_inhibitor {
-background: @background-primary;
-color: @yellow;
-border-left: 4px solid @yellow;
-margin: 6px 2px;
-padding: 8px 12px;
-border-radius: 12px;
-}
-
-#idle_inhibitor.activated {
-background: @yellow;
-border-left: 4px solid @background-primary;
-color: @base;
-}
-
-#mode {
-background: @warning;
-color: @base;
-font-weight: bold;
-padding: 8px 16px;
-margin: 6px 8px;
-border-radius: 12px;
-}
-
-/* -----------------------------------------------------------------------------
- * Hover effects
- * -------------------------------------------------------------------------- */
-
-#clock:hover,
-#battery:hover,
-#cpu:hover,
-#memory:hover,
-#temperature:hover,
-#backlight:hover,
-#network:hover,
-#pulseaudio:hover,
-#custom-launcher:hover,
-#custom-notification:hover,
-#custom-weather:hover,
-#custom-updates:hover,
-#custom-vpn:hover,
-#language:hover,
-#custom-cava:hover {
-opacity: 0.8;
 }

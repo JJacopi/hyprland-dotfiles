@@ -1,38 +1,175 @@
 {
-  "style": "~/.config/waybar/style.css",
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 0,
+    "margin-top": 8,
+    "margin-left": 12,
+    "margin-right": 12,
 
-  "layer": "top",
-  "position": "top",
-  "height": 10,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window",
+        "custom/media-prev",
+        "custom/media-play",
+        "custom/media-next",
+        "custom/media-info",
+        "custom/cava"
 
-  "modules-left": [
-    "custom/launcher",
-    "hyprland/workspaces",
-    "custom/weather",
-    "custom/updates",
-    "custom/cava"
-  ],
+    ],
 
-  "modules-center": [
-    "memory",
-    "cpu",
-    "temperature"
-  ],
+    "modules-center": [
+        "clock"
 
-  "modules-right": [
-    "idle_inhibitor",
-    "battery",
-    "hyprland/language",
-    "keyboard-state",
-    "backlight",
-    "pulseaudio",
-    "network",
-    //"custom/vpn",
-    "clock",
-    "custom/notification",
-    "tray"
-  ],
+    ],
 
-  "include": "~/.config/waybar/modules.jsonc"
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "battery",
+        "tray"
+    ],
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "󰎤",
+            "2": "󰎧",
+            "3": "󰎪",
+            "4": "󰎭",
+            "5": "󰎱",
+            "urgent": "󱈸",
+            "active": "󰮯",
+            "default": "󰊠"
+        },
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "persistent-workspaces": {
+            "*": 5
+        }
+    },
+
+    "hyprland/window": {
+        "format": "  {title}",
+        "max-length": 40,
+        "separate-outputs": true,
+        "rewrite": {
+            "(.*) — Mozilla Firefox": "󰈹  $1",
+            "(.*) - fish": "  fish",
+            "(.*) - zsh": "  zsh",
+            "(.*) - bash": "  bash",
+            "(.*)nvim(.*)": "  nvim"
+        }
+    },
+
+        "custom/media-prev": {
+        "format": "󰒮",
+        "on-click": "playerctl previous",
+        "tooltip": false
+    },
+
+    "custom/media-play": {
+        "exec": "playerctl status 2>/dev/null | awk '{if ($0 == \"Playing\") print \"󰏤\"; else print \"󰐊\"}'",
+        "interval": 2,
+        "on-click": "playerctl play-pause",
+        "tooltip": false
+    },
+
+    "custom/media-next": {
+        "format": "󰒭",
+        "on-click": "playerctl next",
+        "tooltip": false
+    },
+
+    "custom/media-info": {
+        "exec": "playerctl metadata --format '{{artist}} — {{title}}' 2>/dev/null | awk '{ if (length($0) > 45) print substr($0,1,45)\"…\"; else print $0 }'",
+        "interval": 3,
+        "format": "{}",
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "escape": true,
+        "exec-if": "playerctl status 2>/dev/null"
+    },
+
+    "custom/cava": {
+        "exec": "~/.config/cava/cava.sh",
+        "format": "{}",
+        "tooltip": false
+    },
+
+
+
+    "clock": {
+        "format": "{:%I:%M %p}",
+        "format-alt": "{:%A, %B %d}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#cdd6f4'><b>{}</b></span>",
+                "days": "<span color='#cdd6f4'>{}</span>",
+                "weekdays": "<span color='#89b4fa'><b>{}</b></span>",
+                "today": "<span color='#f38ba8'><b>{}</b></span>"
+            }
+        }
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "󰝟  Muted",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "scroll-step": 2
+    },
+
+    "network": {
+        "format-wifi": "󰤨  {essid}",
+        "format-ethernet": "󰈀  Wired",
+        "format-linked": "󰤫  No IP",
+        "format-disconnected": "󰤭  Off",
+        "tooltip-format": "{ifname} — {ipaddr}\n󰓅  {bandwidthUpBytes}  󰓇  {bandwidthDownBytes}",
+        "on-click": "nm-connection-editor"
+    },
+
+    "cpu": {
+        "format": "󰘚  {usage}%",
+        "interval": 3,
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "󰍛  {percentage}%",
+        "interval": 5,
+        "tooltip-format": "{used:0.1f}G / {total:0.1f}G"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-plugged": "󰚥  {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "tooltip-format": "{timeTo} — {power:.1f}W"
+    },
+
+    "tray": {
+        "icon-size": 14,
+        "spacing": 10
+    }
 }
 
