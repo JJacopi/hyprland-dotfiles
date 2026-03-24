@@ -41,10 +41,12 @@
   // CAVA Audio Visualizer
   "custom/cava": {
     "exec": "~/.config/waybar/scripts/cava.sh",
-    "format": "♪ {}",
-    "on-click-middle": "playerctl play-pause",
+    "format": "♪ {} ",
+    "tootip": true,
+    "tooltip-format": "hello" ,
+    "on-click-middle": "playerctl previous",
     "on-click-right": "playerctl next",
-    "on-click-left": "playerctl previous"
+    "on-click": "playerctl play-pause"
   },
 
   // Memory / CPU / Temp
