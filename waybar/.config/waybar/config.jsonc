@@ -7,9 +7,10 @@
     "margin-left": 12,
     "margin-right": 12,
 
+
     "modules-left": [
         "hyprland/workspaces",
-        "hyprland/window",
+        //"hyprland/window",
         "custom/media-prev",
         "custom/media-play",
         "custom/media-next",
@@ -84,7 +85,7 @@
     },
 
     "custom/media-info": {
-        "exec": "playerctl metadata --format '{{artist}} — {{title}}' 2>/dev/null | awk '{ if (length($0) > 45) print substr($0,1,45)\"…\"; else print $0 }'",
+        "exec": "playerctl metadata --format '{{artist}} — {{title}}' 2>/dev/null | awk '{ if (length($0) > 20) print substr($0,1,20)\"…\"; else print $0 }'",
         "interval": 3,
         "format": "{}",
         "on-click": "playerctl play-pause",
@@ -92,6 +93,7 @@
         "on-scroll-down": "playerctl previous",
         "escape": true,
         "exec-if": "playerctl status 2>/dev/null"
+
     },
 
     "custom/cava": {
